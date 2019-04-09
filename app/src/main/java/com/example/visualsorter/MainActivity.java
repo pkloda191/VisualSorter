@@ -58,7 +58,57 @@ public class MainActivity extends AppCompatActivity
 
     private void mergeSort(int[] ar)
     {
+        merger(ar, 0, ar.length-1);
+    }
 
+    private void merger(int ar[], int begin, int end)
+    {
+        if(begin != end)
+        {
+            int lBegin = begin;
+            int lEnd = ((end-begin)/2 + begin);
+            int rBegin = ((end-begin)/2 + begin) + 1;
+            int rEnd = end;
+            merger(ar, lBegin, lEnd);
+            merger(ar, rBegin, rEnd);
+
+            int[] temp = new int[rEnd - lBegin + 1];
+            int currLeft = lBegin;
+            int currRight = rBegin;
+
+            for(int tempPos = 0; tempPos < temp.length; tempPos++)
+            {
+                if(currLeft > lEnd)
+                {
+                    temp[tempPos] = ar[currRight];
+                    currRight++;
+                }
+                else if(currRight > rEnd)
+                {
+                    temp[tempPos] = ar[currLeft];
+                    currLeft++;
+                }
+                else
+                    {
+                    if(ar[currLeft] < ar[currRight])
+                    {
+                        temp[tempPos] = ar[currLeft];
+                        currLeft++;
+                    }
+                    else
+                    {
+                        temp[tempPos] = ar[currRight];
+                        currRight++;
+                    }
+                }
+            }
+            int tempPos = 0;
+            for(int i = lBegin; i <= rEnd; i++)
+            {
+                ar[i] = temp[tempPos];
+                tempPos++;
+            }
+        }
     }
 
     //recursion refresher example
